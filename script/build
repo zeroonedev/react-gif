@@ -1,0 +1,8 @@
+#!/bin/sh
+webpack --devtool source-map
+
+node_modules/.bin/uglifyjs dist/react-gif.js \
+  --output dist/react-gif.min.js \
+  --source-map dist/react-gif.min.map \
+  --source-map-url react-gif.min.map \
+  --compress warnings=false

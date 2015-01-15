@@ -1,0 +1,43 @@
+{
+  "name": "react-gif",
+  "version": "0.0.1",
+  "description": "React port of [x-gif](http://geelen.github.io/x-gif/)",
+  "main": "lib/react-gif.js",
+  "scripts": {
+    "test": "script/test --browsers Firefox --single-run",
+    "start": "script/build"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cezary/react-gif.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "gif"
+  ],
+  "author": "Cezary Wojtkowski <cezary@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cezary/react-gif/issues"
+  },
+  "homepage": "https://github.com/cezary/react-gif",
+  "peerDependencies": {
+    "react": "^0.12.0"
+  },
+  "devDependencies": {
+    "6to5-loader": "^2.0.0",
+    "reactify": "^0.17.1",
+    "uglify-js": "^2.4.15",
+    "webpack": "^1.4.13",
+    "webpack-dev-server": "^1.6.6"
+  },
+  "dependencies": {
+    "exploder": "git://github.com/cezary/exploder"
+  }
+}
