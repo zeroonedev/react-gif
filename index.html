@@ -32,15 +32,31 @@
   var App = React.createClass({
     getInitialState: function() {
       return {
+        gifState: 'stop',
         url: 'http://i.imgur.com/iKXH4E2.gif'
       };
+    },
+
+    handlePause: function() {
+      this.setState({
+        gifState: 'stop'
+      });
+    },
+
+    handlePlay: function() {
+      this.setState({
+        gifState: 'play'
+      });
     },
 
     render: function () {
       return (
         <div>
           <h1>react-gif</h1>
-          <Gif src={this.state.url} play />
+          <Gif src={this.state.url} play={this.state.gifState ===
+'play'} stop={this.state.gifState === 'stop'} />
+          <button onClick={this.handlePause}>Pause</button>
+          <button onClick={this.handlePlay}>Play</button>
         </div>
       );
     }

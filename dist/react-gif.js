@@ -82,12 +82,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: "Gif",
 	
 	  getDefaultProps: function () {
-	    return {};
+	    return {
+	      speed: 1
+	    };
 	  },
 	
 	  getInitialState: function () {
 	    return {
-	      currentFrame: 0
+	      currentFrame: 0,
+	      stopped: false
 	    };
 	  },
 	
@@ -97,42 +100,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	
+	  componentDidUpdate: function (prevProps, prevState) {
+	    // if stopped is toggled off
+	    if (prevState.stopped === true && this.state.stopped === false) this.animationLoop();
+	    // if startTime is updated
+	    if (prevState.startTime !== this.state.startTime && this.animationLoop) this.animationLoop();
+	  },
+	
 	  componentWillReceiveProps: function (nextProps) {
 	    if (this.props.src !== nextProps.src) {
 	      this.explode(nextProps.src);
 	    }
-	    if (this.props.play) this.play();
-	    if (this.props.stop) this.stop();
+	    if (nextProps.play) this.start();
+	    if (nextProps.stop) this.stop();
 	  },
 	
 	  explode: function (url) {
 	    var _this = this;
 	    var exploder = new Exploder(url);
 	    exploder.load().then(function (gif) {
-	      console.log("gif", gif);
+	      _this.gif = gif;
 	      _this.setState(gif);
-	      if (_this.props.play) {
-	        _this.play();
-	      }
+	      _this.startSpeed();
+	      _this.start();
 	    });
 	  },
 	
-	  play: function () {
-	    this.intervalId = setInterval((function () {
-	      this.setState({
-	        currentFrame: (this.state.currentFrame + 1) % this.state.frames.length
+	  startSpeed: function () {
+	    var _this2 = this;
+	    this.animationLoop = function () {
+	      var gifLength = 10 * _this2.state.length / _this2.props.speed,
+	          duration = performance.now() - _this2.state.startTime,
+	          repeatCount = duration / gifLength,
+	          fraction = repeatCount % 1;
+	
+	      _this2.setState({
+	        currentFrame: _this2.gif.frameAt(fraction)
 	      });
-	    }).bind(this), 100);
+	
+	      if (!_this2.state.stopped) requestAnimationFrame(_this2.animationLoop);
+	    };
+	  },
+	
+	  start: function () {
+	    this.setState({
+	      startTime: performance.now(),
+	      stopped: false
+	    });
 	  },
 	
 	  stop: function () {
-	    clearInterval(this.intervalId);
+	    this.setState({
+	      stopped: true
+	    });
 	  },
 	
 	  render: function () {
-	    var _this2 = this;
+	    var _this3 = this;
 	    var framesStyle = {
-	      display: "inline-style",
+	      display: "block",
 	      position: "relative"
 	    };
 	    var frameStyle = {
@@ -145,9 +171,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	
 	    var frames = this.state.frames ? this.state.frames.map(function (frame, index) {
-	      var show = _this2.state.currentFrame >= index ? 1 : 0;
-	      var s = merge(frameStyle, { opacity: show });
-	      return React.createElement("img", { src: frame.url, className: "frame", style: s });
+	      var show = _this3.state.currentFrame >= index ? 1 : 0;
+	      var style = merge(frameStyle, { opacity: show });
+	      if (index === 0) style = merge(style, { position: "static" });
+	
+	      return React.createElement("img", { src: frame.url, className: "frame", style: style });
 	    }) : null;
 	
 	    return React.createElement(
