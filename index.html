@@ -39,7 +39,7 @@
 
     handlePause: function() {
       this.setState({
-        gifState: 'stop'
+        gifState: 'pause'
       });
     },
 
@@ -49,14 +49,21 @@
       });
     },
 
+    handleStop: function() {
+      this.setState({
+        gifState: 'stop'
+      });
+    },
+
     render: function () {
       return (
         <div>
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
-'play'} stop={this.state.gifState === 'stop'} />
-          <button onClick={this.handlePause}>Pause</button>
+'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} />
           <button onClick={this.handlePlay}>Play</button>
+          <button onClick={this.handlePause}>Pause</button>
+          <button onClick={this.handleStop}>Stop</button>
         </div>
       );
     }

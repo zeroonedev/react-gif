@@ -90,6 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getInitialState: function () {
 	    return {
 	      currentFrame: 0,
+	      offset: 0,
 	      stopped: false
 	    };
 	  },
@@ -113,6 +114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    if (nextProps.play) this.start();
 	    if (nextProps.stop) this.stop();
+	    if (nextProps.pause) this.pause();
 	  },
 	
 	  explode: function (url) {
@@ -130,22 +132,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this2 = this;
 	    this.animationLoop = function () {
 	      var gifLength = 10 * _this2.state.length / _this2.props.speed,
-	          duration = performance.now() - _this2.state.startTime,
+	          duration = performance.now() - _this2.state.startTime + _this2.state.offset,
 	          repeatCount = duration / gifLength,
 	          fraction = repeatCount % 1;
+	
+	      if (_this2.state.stopped) return;
 	
 	      _this2.setState({
 	        currentFrame: _this2.gif.frameAt(fraction)
 	      });
-	
-	      if (!_this2.state.stopped) requestAnimationFrame(_this2.animationLoop);
+	      requestAnimationFrame(_this2.animationLoop);
 	    };
 	  },
 	
 	  start: function () {
+	    var startTime = performance.now();
 	    this.setState({
-	      startTime: performance.now(),
+	      startTime: startTime,
 	      stopped: false
+	    });
+	  },
+	
+	  pause: function () {
+	    var offset = performance.now() - this.state.startTime + this.state.offset;
+	    this.setState({
+	      offset: offset,
+	      stopped: true
 	    });
 	  },
 	
