@@ -163,6 +163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  stop: function () {
 	    this.setState({
+	      offset: 0,
 	      stopped: true
 	    });
 	  },
