@@ -112,9 +112,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.props.src !== nextProps.src) {
 	      this.explode(nextProps.src);
 	    }
-	    if (nextProps.play) this.start();
-	    if (nextProps.stop) this.stop();
-	    if (nextProps.pause) this.pause();
+	    if (!this.props.play && nextProps.play) this.start();
+	    if (!this.props.stop && nextProps.stop) this.stop();
+	    if (!this.props.pause && nextProps.pause) this.pause();
 	  },
 	
 	  explode: function (url) {

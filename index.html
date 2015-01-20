@@ -32,7 +32,8 @@
   var App = React.createClass({
     getInitialState: function() {
       return {
-        gifState: 'stop',
+        gifState: 'play',
+        speed: 1,
         url: 'http://i.imgur.com/iKXH4E2.gif'
       };
     },
@@ -55,15 +56,25 @@
       });
     },
 
+    handleSpeed: function(e) {
+      this.setState({
+        speed: e.target.value
+      });
+    },
+
     render: function () {
       return (
         <div>
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
-'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} />
+'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} speed={this.state.speed} />
           <button onClick={this.handlePlay}>Play</button>
           <button onClick={this.handlePause}>Pause</button>
           <button onClick={this.handleStop}>Stop</button>
+          <br/>
+          <label>Speed:</label>
+          <input type="range" min="0.1" max="3.0" step="0.1" onChange={this.handleSpeed} />
+          {this.state.speed}
         </div>
       );
     }
