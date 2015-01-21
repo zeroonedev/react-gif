@@ -19,8 +19,15 @@
     pre {
       white-space: pre-wrap;
     }
+    label {
+      display: inline-block;
+      min-width: 60px;
+    }
     label > span {
       padding-right: 10px;
+    }
+    .controls {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -32,7 +39,9 @@
   var gifs = [
     'http://i.imgur.com/iKXH4E2.gif', // ghost in the shell
     'http://i.imgur.com/wTMh99n.gif', // hypnotoad
-    'http://i.imgur.com/r9P6You.gif', // southpark
+    'http://i.imgur.com/qlBYFuD.gif', // penguin 1
+    'http://i.imgur.com/VcyI2Ip.gif', // penguin 2
+    'http://i.imgur.com/ARsNpSD.gif'  // toothless
   ];
 
   var App = React.createClass({
@@ -81,17 +90,21 @@
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
 'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} speed={this.state.speed} />
-          <button onClick={this.handlePlay}>play</button>
-          <button onClick={this.handlePause}>pause</button>
-          <button onClick={this.handleStop}>stop</button>
-          <br/>
-          <label>URL: </label>
-          <input type='text' ref='url' defaultValue={this.state.url} />
-          <button onClick={this.handleURL}>load</button>
-          <br/>
-          <label>Speed:</label>
-          <input type="range" min="0.1" max="3.0" step="0.1" onChange={this.handleSpeed} />
-          {this.state.speed}
+          <div className='controls'>
+            <button onClick={this.handlePlay}>play</button>
+            <button onClick={this.handlePause}>pause</button>
+            <button onClick={this.handleStop}>stop</button>
+          </div>
+          <div className='controls'>
+            <label>url: </label>
+            <input type='text' ref='url' defaultValue={this.state.url} />
+            <button onClick={this.handleURL}>load</button>
+          </div>
+          <div className='controls'>
+            <label>speed:</label>
+            <input type="range" min="0.1" max="3.0" step="0.1" onChange={this.handleSpeed} />
+            {this.state.speed}
+          </div>
         </div>
       );
     }
