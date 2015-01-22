@@ -136,7 +136,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          repeatCount = duration / gifLength,
 	          fraction = repeatCount % 1;
 	
-	      if (_this2.state.stopped) return;
+	      if (_this2.state.stopped) {
+	        _this2.setState({
+	          currentFrame: _this2.gif.frameAt(0)
+	        });
+	        return;
+	      }
 	
 	      _this2.setState({
 	        currentFrame: _this2.gif.frameAt(fraction)
