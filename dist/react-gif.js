@@ -83,6 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  getDefaultProps: function () {
 	    return {
+	      reverse: false,
 	      speed: 1
 	    };
 	  },
@@ -135,6 +136,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          duration = performance.now() - _this2.state.startTime + _this2.state.offset,
 	          repeatCount = duration / gifLength,
 	          fraction = repeatCount % 1;
+	
+	      if (_this2.props.reverse) fraction = 1 - fraction;
 	
 	      if (_this2.state.stopped) {
 	        _this2.setState({

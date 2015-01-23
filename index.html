@@ -48,9 +48,17 @@
     getInitialState: function() {
       return {
         gifState: 'play',
+        reverse: false,
         speed: 1,
         url: gifs[Math.floor(Math.random()*gifs.length)]
       };
+    },
+
+    handleReverse: function(e) {
+      var reverse = this.refs.reverse.getDOMNode().checked;
+      this.setState({
+        reverse: reverse
+      });
     },
 
     handleURL: function(e) {
@@ -89,7 +97,7 @@
         <div>
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
-'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} speed={this.state.speed} />
+'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} reverse={this.state.reverse} speed={this.state.speed} />
           <div className='controls'>
             <button onClick={this.handlePlay}>play</button>
             <button onClick={this.handlePause}>pause</button>
@@ -99,6 +107,10 @@
             <label>url: </label>
             <input type='text' ref='url' defaultValue={this.state.url} />
             <button onClick={this.handleURL}>load</button>
+          </div>
+          <div className='controls'>
+            <label>reverse:</label>
+            <input type='checkbox' ref='reverse' defaultChecked={this.state.reverse} onChange={this.handleReverse} />
           </div>
           <div className='controls'>
             <label>speed:</label>
