@@ -61,6 +61,13 @@
       });
     },
 
+    handlePingPong: function(e) {
+      var pingPong = this.refs.pingPong.getDOMNode().checked;
+      this.setState({
+        pingPong: pingPong
+      });
+    },
+
     handleURL: function(e) {
       var url = this.refs.url.getDOMNode().value;
       this.setState({
@@ -97,7 +104,7 @@
         <div>
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
-'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} reverse={this.state.reverse} speed={this.state.speed} />
+'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} pingPong={this.state.pingPong} reverse={this.state.reverse} speed={this.state.speed} />
           <div className='controls'>
             <button onClick={this.handlePlay}>play</button>
             <button onClick={this.handlePause}>pause</button>
@@ -107,6 +114,10 @@
             <label>url: </label>
             <input type='text' ref='url' defaultValue={this.state.url} />
             <button onClick={this.handleURL}>load</button>
+          </div>
+          <div className='controls'>
+            <label>ping pong:</label>
+            <input type='checkbox' ref='pingPong' defaultChecked={this.state.pingPong} onChange={this.handlePingPong} />
           </div>
           <div className='controls'>
             <label>reverse:</label>

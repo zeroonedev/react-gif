@@ -83,6 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  getDefaultProps: function () {
 	    return {
+	      pingPong: false,
 	      reverse: false,
 	      speed: 1
 	    };
@@ -147,7 +148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	
 	      _this2.setState({
-	        currentFrame: _this2.gif.frameAt(fraction)
+	        currentFrame: _this2.props.pingPong && repeatCount % 2 >= 1 ? _this2.gif.frameAt(1 - fraction) : _this2.gif.frameAt(fraction)
 	      });
 	      requestAnimationFrame(_this2.animationLoop);
 	    };
