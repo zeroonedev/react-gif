@@ -99,12 +99,18 @@
       });
     },
 
+    handleTimes: function(e) {
+      this.setState({
+        times: e.target.value
+      });
+    },
+
     render: function () {
       return (
         <div>
           <h1>react-gif</h1>
           <Gif src={this.state.url} play={this.state.gifState ===
-'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} pingPong={this.state.pingPong} reverse={this.state.reverse} speed={this.state.speed} />
+'play'} pause={this.state.gifState === 'pause'} stop={this.state.gifState === 'stop'} pingPong={this.state.pingPong} reverse={this.state.reverse} times={this.state.times} speed={this.state.speed} />
           <div className='controls'>
             <button onClick={this.handlePlay}>play</button>
             <button onClick={this.handlePause}>pause</button>
@@ -114,6 +120,10 @@
             <label>url: </label>
             <input type='text' ref='url' defaultValue={this.state.url} />
             <button onClick={this.handleURL}>load</button>
+          </div>
+          <div className='controls'>
+            <label>times: </label>
+            <input type='number' ref='times' defaultValue={this.state.times} onChange={this.handleTimes} />
           </div>
           <div className='controls'>
             <label>ping pong:</label>

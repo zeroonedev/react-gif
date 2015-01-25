@@ -140,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      if (_this2.props.reverse) fraction = 1 - fraction;
 	
-	      if (_this2.state.stopped) {
+	      if (_this2.state.stopped || repeatCount >= _this2.props.times) {
 	        _this2.setState({
 	          currentFrame: _this2.gif.frameAt(0)
 	        });
